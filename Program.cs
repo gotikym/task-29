@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System;
 internal class Program
 {
     static void Main(string[] args)
@@ -15,50 +10,33 @@ internal class Program
 
         while (exit == false)
         {
+            Console.Clear();
             Console.WriteLine("Меню:\n1:Добавить досье\n2:Вывести все досье\n3:Удалить досье\n4:Поиск по фамилии\n5:Выход");
             userChoice = Console.ReadLine();
 
             switch (userChoice)
             {
                 case "1":
-                    Console.Clear();
-                    Console.WriteLine("введите инфонрмацию о новом сотруднике");
-                    Console.WriteLine("фио: ");
 
-                    arrayExpansion(ref fullNames);
+                    ArrayExpansion(ref fullNames, ref workingPosition);
 
-                    Console.WriteLine("должность: ");
-
-                    arrayExpansion(ref workingPosition);
-
-                    Console.Clear();
                     break;
 
                 case "2":
 
-                    informationOutput(ref fullNames, ref workingPosition);
+                    InformationOutput(ref fullNames, ref workingPosition);
 
                     break;
 
                 case "3":
-                    Console.Clear();
-                    Console.WriteLine("Введите номер досье, которое хотите удалить");
-                    int numberDossier = Convert.ToInt32(Console.ReadLine()) - 1;
 
-                    deleteInformation(ref fullNames, ref numberDossier);
-
-                    deleteInformation(ref workingPosition, ref numberDossier);
-
-                    Console.Clear();
+                    DeleteInformation(ref fullNames, ref workingPosition);
 
                     break;
 
                 case "4":
-                    Console.Clear();
-                    Console.WriteLine("Введите фамилию сотрудника, чтобы увидеть информацию о нём");
-                    string lastName = Console.ReadLine();
 
-                    searchDossier(ref fullNames, ref workingPosition, ref lastName);
+                    SearchDossier(ref fullNames, ref workingPosition);
 
                     break;
 
@@ -72,23 +50,38 @@ internal class Program
         }
     }
 
-    static string[] arrayExpansion(ref string[] array)
+    static void ArrayExpansion(ref string[] arrayName, ref string[] arrayPosition)
     {
-        string changer;
-        changer = Console.ReadLine();
-        string[] Expansion = new string[array.Length + 1];
+        Console.Clear();
+        Console.WriteLine("введите инфонрмацию о новом сотруднике");
+        Console.WriteLine("фио: ");
+        string changerName;
+        changerName = Console.ReadLine();
+        string[] expansionName = new string[arrayName.Length + 1];
 
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < arrayName.Length; i++)
         {
-            Expansion[i] = array[i];
+            expansionName[i] = arrayName[i];
         }
 
-        Expansion[Expansion.Length - 1] = changer;
-        array = Expansion;
-        return array;
+        expansionName[expansionName.Length - 1] = changerName;
+        arrayName = expansionName;
+
+        Console.WriteLine("должность: ");
+        string changerPosition;
+        changerPosition = Console.ReadLine();
+        string[] expansionPosition = new string[arrayPosition.Length + 1];
+
+        for (int i = 0; i < arrayPosition.Length; i++)
+        {
+            expansionPosition[i] = arrayPosition[i];
+        }
+
+        expansionPosition[expansionPosition.Length - 1] = changerPosition;
+        arrayPosition = expansionPosition;        
     }
 
-    static void informationOutput(ref string[] firstOutputArray, ref string[] secondOutputArray)
+    static void InformationOutput(ref string[] firstOutputArray, ref string[] secondOutputArray)
     {
         Console.Clear();
 
@@ -102,15 +95,19 @@ internal class Program
         Console.Clear();
     }
 
-    static string[] deleteInformation(ref string[] reduction, ref int numberDossier)
+    static void DeleteInformation(ref string[] reductionName, ref string[] reductionPosition)
     {
-        string[] arrayReduction = new string[reduction.Length - 1];
+        Console.Clear();
+        Console.WriteLine("Введите номер досье, которое хотите удалить");
+        int numberDossier = Convert.ToInt32(Console.ReadLine()) - 1;
 
-        if (numberDossier == reduction.Length)
+        string[] arrayReductionName = new string[reductionName.Length - 1];
+
+        if (numberDossier == reductionName.Length)
         {
-            for (int i = 0; i < reduction.Length - 1; i++)
+            for (int i = 0; i < reductionName.Length - 1; i++)
             {
-                arrayReduction[i] = reduction[i];
+                arrayReductionName[i] = reductionName[i];
             }
         }
 
@@ -118,21 +115,48 @@ internal class Program
         {
             for (int i = 0; i < numberDossier; i++)
             {
-                arrayReduction[i] = reduction[i];
+                arrayReductionName[i] = reductionName[i];
             }
 
-            for (int i = numberDossier; i < reduction.Length - 1; i++)
+            for (int i = numberDossier; i < reductionName.Length - 1; i++)
             {
-                arrayReduction[i] = reduction[i + 1];
+                arrayReductionName[i] = reductionName[i + 1];
             }
         }
 
-        reduction = arrayReduction;
-        return reduction;
+        reductionName = arrayReductionName;
+
+        string[] arrayReductionPosition = new string[reductionPosition.Length - 1];
+
+        if (numberDossier == reductionPosition.Length)
+        {
+            for (int i = 0; i < reductionPosition.Length - 1; i++)
+            {
+                arrayReductionPosition[i] = reductionPosition[i];
+            }
+        }
+
+        else
+        {
+            for (int i = 0; i < numberDossier; i++)
+            {
+                arrayReductionPosition[i] = reductionPosition[i];
+            }
+
+            for (int i = numberDossier; i < reductionPosition.Length - 1; i++)
+            {
+                arrayReductionPosition[i] = reductionPosition[i + 1];
+            }
+        }
+
+        reductionPosition = arrayReductionPosition;
     }
 
-    static void searchDossier(ref string[] fullNames, ref string[] workPisition, ref string lastName)
+    static void SearchDossier(ref string[] fullNames, ref string[] workPisition)
     {
+        Console.Clear();
+        Console.WriteLine("Введите фамилию сотрудника, чтобы увидеть информацию о нём");
+        string lastName = Console.ReadLine();
         bool nameIsFound = false;
 
         for (int i = 0; i < fullNames.Length; i++)
@@ -151,6 +175,5 @@ internal class Program
 
         Console.WriteLine("\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
-        Console.Clear();
     }
 }
